@@ -1,3 +1,5 @@
+//Добавили карточки на страницу
+
 // Объявили переменную, где будут храниться карточки
 const placesList = document.querySelector(".places__list");
 
@@ -23,3 +25,16 @@ function renderCard({ name, link }) {
 }
 
 render();
+
+//Удаление карточек
+
+const content = document.querySelector(".content");
+
+const deleteCard = content.querySelector(".card__delete-button");
+
+deleteCard.addEventListener("click", function () {
+  const cards = document.querySelectorAll(".places__list");
+  for (let i = 0; i < cards.length; i++) {
+    cards[i].remove();
+  }
+});
