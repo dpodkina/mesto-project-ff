@@ -1,9 +1,25 @@
-// @todo: Темплейт карточки
+// Объявили переменную, где будут храниться карточки
+const placesList = document.querySelector(".places__list");
 
-// @todo: DOM узлы
+const cardInfo = initialCards.map(function (item) {
+  return {
+    name: item.name,
+    link: item.link,
+  };
+});
 
-// @todo: Функция создания карточки
+function render() {
+  cardInfo.forEach(renderCard);
+}
 
-// @todo: Функция удаления карточки
+function renderCard({ name, link }) {
+  const cardTemplate = document.querySelector("#card-template").content;
+  const cardElement = cardTemplate
+    .querySelector(".places__item")
+    .cloneNode(true);
+  cardElement.querySelector(".card__title").textContent = name;
+  cardElement.querySelector(".card__image").src = link;
+  placesList.append(cardElement);
+}
 
-// @todo: Вывести карточки на страницу
+render();
