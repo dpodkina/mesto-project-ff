@@ -1,3 +1,4 @@
+//
 function render() {
   const placesList = document.querySelector(".places__list");
   initialCards.forEach(renderCard);
