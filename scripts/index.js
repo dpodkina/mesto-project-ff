@@ -1,35 +1,39 @@
-//
+//main
+const content = document.querySelector(".content");
+//Секция с карточками places page__section
+const places = content.querySelector(".places");
+// Объявили переменную, куда выведем готовые карточки
+const placesList = places.querySelector(".places__list");
+// TEMPLATE
+const cardTemplate = document.querySelector("#card-template").content;
+//Кнопка удаления карточки
+const deleteButton = cardTemplate.querySelector(".card__delete-button");
+
 function render() {
-  const placesList = document.querySelector(".places__list");
+  //Метод массива
   initialCards.forEach(renderCard);
-  placesList.append(cardElement);
 }
+render();
 
-//Объявляем функцию, которую нужно вызывать при нажатии на кнопку(удаление)
-const callback = () => {
-  const cards = document.querySelectorAll(".places__list");
-  for (let i = 0; i < cards.length; i++) {
-    cards[i].remove();
-  }
-};
-
-function renderCard({ name, link, alt }) {
-  const content = document.querySelector(".content");
-  const deleteCard = content.querySelector(".card__delete-button");
+function renderCard({ name, link }, deleteCard) {
+  //Скопировали шаблон
   const cardTemplate = document.querySelector("#card-template").content;
-  //1 шаг- Скопировали шаблон
   const cardElement = cardTemplate
     .querySelector(".places__item")
     .cloneNode(true);
-  //2 шаг - установили значения вложенных элементов
+  //Установили значения вложенных элементов
   cardElement.querySelector(".card__title").textContent = name;
-  cardElement.querySelector(".card__image").src = (link, (alt = name));
-  return (
-    (name = ""),
-    ((link = ""), (alt = "")),
-    //3 шаг - назначили обработчик клика
-    deleteCard.addEventListener("click", callback)
-  );
-}
+  cardElement.querySelector(".card__image").src = link;
+  cardElement.setAttribute("alt", name);
+  // обработчик клика, по которому будет вызван переданный в аргументах колбэк (функция).
+  cardElement
+    .querySelector(".card__delete-button")
+    .addEventListener("click", function deleteCard() {
+      const cards = document.querySelectorAll(".card");
+      for (let i = 0; i < cards.length; i--) {
+        cards[i].remove();
+      }
+    });
 
-render();
+  return placesList.append(cardElement);
+}
