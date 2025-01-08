@@ -1,21 +1,7 @@
-//main
-const content = document.querySelector(".content");
-//Секция с карточками places page__section
-const places = content.querySelector(".places");
 // Объявили переменную, куда выведем готовые карточки
-const placesList = places.querySelector(".places__list");
-// TEMPLATE
-const cardTemplate = document.querySelector("#card-template").content;
-//Кнопка удаления карточки
-const deleteButton = cardTemplate.querySelector(".card__delete-button");
+const placesList = document.querySelector(".places__list");
 
-function render() {
-  //Метод массива
-  initialCards.forEach(renderCard);
-}
-render();
-
-function renderCard({ name, link }, deleteCard) {
+function renderCard({ name, link }) {
   //Скопировали шаблон
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate
@@ -26,14 +12,16 @@ function renderCard({ name, link }, deleteCard) {
   cardElement.querySelector(".card__image").src = link;
   cardElement.setAttribute("alt", name);
   // обработчик клика, по которому будет вызван переданный в аргументах колбэк (функция).
-  cardElement
-    .querySelector(".card__delete-button")
-    .addEventListener("click", function deleteCard() {
-      const cards = document.querySelectorAll(".card");
-      for (let i = 0; i < cards.length; i--) {
-        cards[i].remove();
-      }
-    });
-
-  return placesList.append(cardElement);
+  const deleteButton = cardElement.querySelector(".card__delete-button");
+  deleteButton.addEventListener("click", deleteCard);
+  //возвращаем созданную карточку
+  return cardElement;
 }
+
+//Функция удаления
+function deleteCard() {
+  const cards = this.parentElement;
+  cards.remove();
+}
+
+initialCards.map(renderCard, deleteCard).forEach((el) => placesList.append(el));
